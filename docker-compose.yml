@@ -15,20 +15,6 @@ services:
     networks:
       - yii2-network
 
-  db:
-    image: mysql:5.7
-    container_name: yii2-db
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: yii2app
-      MYSQL_USER: yii2user
-      MYSQL_PASSWORD: yii2pass
-    ports:
-      - "3306:3306"
-    networks:
-      - yii2-network
-
 networks:
   yii2-network:
     driver: bridge
