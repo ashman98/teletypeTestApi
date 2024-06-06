@@ -31,6 +31,6 @@ class TeletypeLogs extends BaseObject
      */
     public function logTeletypeErrors($message): void
     {
-        Yii::info('Outgoing message: ' . $message, 'teletype_errors');
+        Yii::info('Teletype errors: ' . $message, 'teletype_errors');
     }
 }

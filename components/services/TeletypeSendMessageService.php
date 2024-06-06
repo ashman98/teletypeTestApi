@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\components\services;
 
 use RuntimeException;
 use Yii;
@@ -52,10 +52,11 @@ class TeletypeSendMessageService extends Component
      */
     public function sendMessage(): Response
     {
+
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('POST')
-            ->setUrl(Yii::$app->params['teletypeApiUrl'] . 'message/send')
+            ->setUrl(Yii::$app->params['teletypeApiUrl'] . 'message/send?token='.Yii::$app->params['teletypeApiKey'])
             ->setHeaders(['Authorization' => 'Bearer ' . Yii::$app->params['teletypeApiKey']])
             ->setData([
                 'dialogId' => $this->dialogId,
@@ -72,15 +73,15 @@ class TeletypeSendMessageService extends Component
     private function validate(): void
     {
         if (empty($this->dialogId)) {
-            Yii::info("Dialog Id is missing", 'custom');
+            Yii::info("Dialog Id is missing", 'teletype_errors');
             throw new RuntimeException('Dialog Id is missing');
         }
         if (!isset(Yii::$app->params['teletypeApiKey'])) {
-            Yii::info("Teletype api key not found", 'custom');
+            Yii::info("Teletype api key not found", 'teletype_errors');
             throw new RuntimeException('Dialog Id is missing');
         }
         if (!isset(Yii::$app->params['teletypeApiUrl'])) {
-            Yii::info("Teletype api url not found", 'custom');
+            Yii::info("Teletype api url not found", 'teletype_errors');
             throw new RuntimeException('Teletype api url not found');
         }
     }
